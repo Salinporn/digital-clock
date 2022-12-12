@@ -1,6 +1,5 @@
 # Digital-clock
 Computer Programming: Python Individual Project
-
 Course: 01286121 Computer Programming
 Program: Software Engineering
 University: Faculty of Engineering, KMITL
