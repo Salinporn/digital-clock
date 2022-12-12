@@ -582,7 +582,7 @@ class StopWatch(Clock):
         if self.btSaveLaps['text'] == "Choose file":
             self.btSaveLaps['text'] = "Laps"
             self.btSaveLaps.config(bg="#00C957", fg="#FFF8DC")
-            self.file = filedialog.asksaveasfilename(initialdir="C:/Users/milds/python/project/stopwatch")
+            self.file = filedialog.asksaveasfilename(initialdir="project/stopwatch")
         elif self.btSaveLaps['text'] == "Laps":
             self.sw_time += self.hour.get() + " M : " + self.minute.get() + " S : " + self.sec.get() + " mS\n"
             savefile = open(self.file, "w")
