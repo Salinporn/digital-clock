@@ -1,3 +1,13 @@
+#   Course: 01286121 Computer Programming
+#   Program: Software Engineering
+#   University: Faculty of Engineering, KMITL
+#   Year 1, Semester 1
+
+#   Python Individual Project
+#   Project: Digital Clock
+#   Written by: Salinporn Rattanaprapaporn   
+                                                                            
+    
 from datetime import datetime
 import time
 import pytz
