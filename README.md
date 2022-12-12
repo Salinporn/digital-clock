@@ -1,4 +1,4 @@
-# digital-clock
+# Digital-clock
 Computer Programming: Python project
 
 Final Python Project
