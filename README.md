@@ -3,8 +3,7 @@ Computer Programming: Python Individual Project
 
 Course: 01286121 Computer Programming
 
-Program: Year 1, Semester 1, Software Engineering
-University: Faculty of Engineering, KMITL 
+Program: Year 1, Semester 1, Software Engineerin, KMITL 
 
 
 Final Python Project
