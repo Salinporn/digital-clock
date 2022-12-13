@@ -6,8 +6,8 @@
 #   Python Individual Project
 #   Project: Digital Clock
 #   Written by: Salinporn Rattanaprapaporn   
-                                                                            
-    
+
+
 from datetime import datetime
 import time
 import pytz
@@ -15,6 +15,7 @@ from tkinter import *
 from tkinter import messagebox, filedialog
 import pickle
 import winsound
+
 
 class Clock():
     def __init__(self, window):
@@ -27,7 +28,7 @@ class Clock():
         self.sec.set("00")
         self.menu()
 
-        # digital clock
+        # digital clock display default
         self.label = "Bangkok"
         self.gmt = "Etc/GMT-7"
         self.clock = Label(self.window, font=("times", 50, "bold"), width=13, height=2, bg="white", fg="#3D59AB")
@@ -36,6 +37,7 @@ class Clock():
         self.name.grid(row=1, sticky="N")
         self.updatetime()
 
+    # to update time on display
     def updatetime(self):
         self.home = pytz.timezone(self.gmt)
         self.local_time = datetime.now(self.home)
@@ -51,7 +53,7 @@ class Clock():
         settingMenu = Menu(menubar, tearoff=False)
         menubar.add_cascade(label="Setting", menu=settingMenu)
 
-        # set timezones
+        # choose timezones / reset timezone to default time
         timezoneMenu = Menu(settingMenu, tearoff=False)
         settingMenu.add_cascade(label="Set Timezones", menu=timezoneMenu)
         settingMenu.add_command(label="Reset Timezones", command=self.resetTimezone)
@@ -69,7 +71,7 @@ class Clock():
         europeMenu = Menu(continentMenu, tearoff=False)
         timezoneMenu.add_cascade(label="Europe", menu=europeMenu)
 
-        # afica cities
+        # cities in Africa
         africaMenu.add_command(label="Abidjan", command=self.zero)
         africaMenu.add_command(label="Accra", command=self.zero)
         africaMenu.add_command(label="Addis_Ababa", command=self.posThree)
@@ -118,7 +120,7 @@ class Clock():
         africaMenu.add_command(label="Tunis", command=self.posOne)
         africaMenu.add_command(label="Windhoek", command=self.posTwo)
 
-        # america cities
+        # cities in America
         americaMenu.add_command(label="Adak", command=self.posFourteen)
         americaMenu.add_command(label="Anchorage", command=self.negNine)
         americaMenu.add_command(label="Anguilla", command=self.negFour)
@@ -196,7 +198,7 @@ class Clock():
         americaMenu.add_command(label="Toronto", command=self.negFive)
         americaMenu.add_command(label="Vancouver", command=self.negEight)
 
-        # asia cities
+        # cities in Asia
         asiaMenu.add_command(label="Aden", command=self.posThree)
         asiaMenu.add_command(label="Almaty", command=self.posSix)
         asiaMenu.add_command(label="Amman", command=self.posThree)
@@ -275,7 +277,7 @@ class Clock():
         asiaMenu.add_command(label="Yekaterinburg", command=self.posFive)
         asiaMenu.add_command(label="Yerevan", command=self.posFour)
 
-        # australia cities
+        # cities in Australia
         australiaMenu.add_command(label="Adelaide", command=self.posTenHalf)
         australiaMenu.add_command(label="Brisbane", command=self.posTen)
         australiaMenu.add_command(label="Broken_Hill", command=self.posTenHalf)
@@ -288,7 +290,7 @@ class Clock():
         australiaMenu.add_command(label="Perth", command=self.posEight)
         australiaMenu.add_command(label="Sydney", command=self.posEleven)
 
-        # europe cities
+        # cities in Europe
         europeMenu.add_command(label="Amsterdam", command=self.posOne)
         europeMenu.add_command(label="Andorra", command=self.posOne)
         europeMenu.add_command(label="Astrakhan", command=self.posFour)
@@ -350,14 +352,12 @@ class Clock():
         europeMenu.add_command(label="Zaporozhye", command=self.posTwo)
         europeMenu.add_command(label="Zurich", command=self.posOne)
 
-    def checkGMT(self):
-        self.w0 = Toplevel(self.window)
-        self.w0.title("Timezones")
-
+    # change time and label into Bangkok
     def resetTimezone(self):
         self.gmt = "Etc/GMT-7"
         self.label = "Bangkok"
 
+    # change time into different GMT
     def zero(self):
         self.gmt = "Etc/GMT0"
         self.label = "GMT 0"
@@ -462,9 +462,12 @@ class Clock():
         self.gmt = "Etc/GMT+9"
         self.label = "GMT -9"
 
+
 class Timer(Clock):
     def __init__(self, window):
         super().__init__(window)
+
+        # button to use countdown function
         btCountdown = Button(self.window, text="Countdown Timer", width=15, height=1, font=("times", 15),
                              bg="#6495ED", fg="#FFF8DC", command=self.countdown)
         btCountdown.grid(row=4, sticky="W")
@@ -473,6 +476,8 @@ class Timer(Clock):
         self.w1 = Toplevel(self.window)
         self.w1.attributes("-topmost", True)
         self.w1.title("Timer")
+
+        # input hours, minutes, seconds
         hour_input = Entry(self.w1, width=3, font=("times", 50, "bold"), justify="center", fg="#3D59AB",
                            textvariable=self.hour)
         hour_input.grid(row=0, column=0)
@@ -485,15 +490,17 @@ class Timer(Clock):
                           textvariable=self.sec)
         sec_input.grid(row=0, column=2)
 
+        # button to start countdown
         btSettime = Button(self.w1, text="Set Time", font=("times", 15), bd='5',
                            bg="#6495ED", fg="#FFF8DC", command=self.setTimer)
         btSettime.grid(row=1, column=1)
 
     def setTimer(self):
+        # check if user enters right values which are integer
         try:
             temp = int(self.hour.get()) * 3600 + int(self.minute.get()) * 60 + int(self.sec.get())
         except:
-            print("Please input the right value")
+            print("Please enter right values for the input")
 
         while temp >= 0:
             mins, secs = divmod(temp, 60)
@@ -506,8 +513,9 @@ class Timer(Clock):
             self.w1.update()
             time.sleep(1)
 
-            if (temp == 0):
-                messagebox.showinfo("Countdown", "Time's up ")
+            # Show messagebox when total second = 0
+            if temp == 0:
+                messagebox.showinfo("Countdown", "Time's up!")
 
             temp -= 1
 
@@ -515,10 +523,13 @@ class Timer(Clock):
         self.minute.set("00")
         self.sec.set("00")
 
+
 class StopWatch(Clock):
     def __init__(self, window):
         super().__init__(window)
         self.sw_time = ""
+
+        # button to use stopwatch function
         btCountup = Button(self.window, text="Stopwatch", width=15, height=1, font=("times", 15),
                            bg="#6495ED", fg="#FFF8DC", command=self.stopwatch)
         btCountup.grid(row=4, sticky="E")
@@ -540,20 +551,24 @@ class StopWatch(Clock):
                             fg="#3D59AB", bg="white", textvariable=self.sec)
         secondlabel.grid(row=0, column=2, padx=1)
 
+        # button to reset time of stopwatch
         self.btReset = Button(self.w2, width=10, text="Reset", font=("times", 15), bd='5',
                               bg="#6495ED", fg="#FFF8DC", command=self.reset_stopwatch)
         self.btReset.grid(row=1, column=0)
 
+        # button to start/stop the time
         self.btStartStop = Button(self.w2, width=10,text="Start", font=("times", 15), bd='5',
                          bg="#6495ED", fg="#FFF8DC", command=self.startstop)
         self.btStartStop.grid(row=1, column=1, padx=1)
 
+        # button to choose file and save laps time into the file
         self.btSaveLaps = Button(self.w2, width=10, text="Choose file", font=("times", 15), bd='5',
                         bg="#6495ED", fg="#FFF8DC", command=self.saveLaps)
         self.btSaveLaps.grid(row=1, column=2, padx=1)
 
     def startstop(self):
         if self.btStartStop['text'] == "Start":
+            # change label and color of the button into "Stop" after clicking it
             self.btStartStop['text'] = "Stop"
             self.btStartStop.config(bg="#DC143C", fg="#FFF8DC")
 
@@ -569,17 +584,19 @@ class StopWatch(Clock):
                 self.minute.set(f"{secs:02}")
                 self.sec.set(f"{msecs:02}")
                 self.w2.update()
-                time.sleep(0.001)
+                time.sleep(0.001) # make time run in milliseconds
 
                 temp += 1
 
         elif self.btStartStop['text'] == "Stop":
+            # change label and color of the button into "Start" after clicking it
             self.btStartStop['text'] = "Start"
             self.btStartStop.config(bg="#6495ED", fg="#FFF8DC")
-            self.bool = False
+            self.bool = False # break the loop to stop the running time
 
 
     def reset_stopwatch(self):
+        # change label and color of the button to "Start"
         self.btStartStop['text'] = "Start"
         self.btStartStop.config(bg="#6495ED", fg="#FFF8DC")
         self.bool = False
@@ -590,19 +607,26 @@ class StopWatch(Clock):
 
     def saveLaps(self):
         if self.btSaveLaps['text'] == "Choose file":
+            # change label and color of the button into "Laps" after clicking it
             self.btSaveLaps['text'] = "Laps"
             self.btSaveLaps.config(bg="#00C957", fg="#FFF8DC")
+
+            # choose/create file in project/stopwatch folder
             self.file = filedialog.asksaveasfilename(initialdir="project/stopwatch")
+
         elif self.btSaveLaps['text'] == "Laps":
+            # add time to text file when user clicks on "Laps" button
             self.sw_time += self.hour.get() + " M : " + self.minute.get() + " S : " + self.sec.get() + " mS\n"
             savefile = open(self.file, "w")
             savefile.write(self.sw_time)
             savefile.close()
 
+
 class AlarmClock(Clock):
     def __init__(self, window):
         super().__init__(window)
         self.isRun = False
+
         self.hh = StringVar()
         self.hh_list = ['00', '01', '02', '03', '04', '05', '06', '07', '08', '09',
                      '10', '11', '12', '13', '14', '15', '16', '17', '18', '19',
@@ -627,6 +651,7 @@ class AlarmClock(Clock):
                     '50', '51', '52', '53', '54', '55', '56', '57', '58', '59', '60']
         self.ss.set(self.ss_list[0])
 
+        # button to use alarm clock function
         btAlarm = Button(self.window, text="Alarm clock", width=15, height=1, font=("times", 15),
                          bg="#6495ED", fg="#FFF8DC", command=self.alarm)
         btAlarm.grid(row=4)
@@ -648,6 +673,7 @@ class AlarmClock(Clock):
         s.config(font=("times", 50, "bold"), bg="white", fg="#3D59AB")
         s.grid(row=0, column=2)
 
+        # button to set time and run the alarm clock
         self.btRunAlarm = Button(self.w3, width=9, text="Set Alarm", font=("times", 15), bd='4',
                            bg="#6495ED", fg="#FFF8DC", command=self.runAlarm)
         self.btRunAlarm.grid(row=1, column=1, pady=7)
@@ -655,10 +681,14 @@ class AlarmClock(Clock):
     def runAlarm(self):
         alarm_time = f"{self.hh.get()}:{self.mm.get()}:{self.ss.get()}"
         self.isRun = True
+
         while self.isRun != False:
             time.sleep(1)
             now = datetime.now().strftime("%H:%M:%S")
+
+            # if current time = alarm time user set,
             if now == alarm_time:
+                # play beep sound and show message box saying "Wake up!"
                 winsound.PlaySound("alarm_beep.wav", winsound.SND_FILENAME)
                 messagebox.showinfo("Alarm", "Wake up!")
                 self.isRun = False
