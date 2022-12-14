@@ -1,5 +1,6 @@
 #   Course: 01286121 Computer Programming
 #   Program: Software Engineering
+#   Department: Department of Computer Engineering
 #   University: Faculty of Engineering, KMITL
 #   Year 1, Semester 1
 
